@@ -233,12 +233,4 @@ public class Algo_2 {
 		return result.toString();
 	}
 	
-	Node cloneNode(Node node){
-		Node result = new Node(node.data);
-		while( node != null ){
-			node = node.next;
-			result.next = new Node(node.data);
-		}
-		return result;
-	}
 }
