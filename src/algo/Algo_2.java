@@ -16,8 +16,8 @@ public class Algo_2 {
 //		this.algo_2_4();
 //		this.algo_2_5();
 //		this.algo_2_5_2();
-//		this.algo_2_6();
-		this.algo_2_7();
+		this.algo_2_6();
+//		this.algo_2_7();
 	}
 	
 	
@@ -113,6 +113,7 @@ public class Algo_2 {
 	}
 	
 	// 회문(내부에서 내부를 참조해서 무한루프를 돌게 되는 상황)일 경우 회문의 시작 지점을 반환.
+	// 인자가 많을 경우 메모리 부하가 커짐 -> 다른 방법 필요.
 	public Node algo_2_6(Node node){
 		List<String> his = new ArrayList<>();
 		while( node != null ){
