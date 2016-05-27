@@ -8,7 +8,22 @@ public class Algo_3 {
 //		this.algo_3_1();
 //        this.algo_3_2();
 //        this.algo_3_3();
-		this.algo_3_4();
+//		this.algo_3_4();
+		this.algo_3_5();
+	}
+
+	private void algo_3_5() {
+		StackQue stackQue = new StackQue();
+		stackQue.push(1);
+		stackQue.push(2);
+		stackQue.push(3);
+		stackQue.push(4);
+		stackQue.push(5);
+		System.out.println(stackQue.pop());
+		stackQue.push(6);
+		System.out.println(stackQue.pop());
+		stackQue.push(7);
+		System.out.println(stackQue.pop());
 	}
 
 	private void algo_3_4() {
