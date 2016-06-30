@@ -9,7 +9,7 @@ public class Algo_5_2 {
     String result = "";
     @Test
     public void test(){
-        double d = 0.25;
+        double d = 0.27;
         proc(d);
 
 //        System.out.println(result);

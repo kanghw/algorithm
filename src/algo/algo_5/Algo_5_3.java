@@ -11,8 +11,13 @@ public class Algo_5_3 {
     BitUitl bit = new BitUitl();
     @Test
     public void test(){
-        int x = 1000;
-        proc(x);
+//        proc(103);
+//        proc2(108);
+        for( int i = 100; i < 200; i++ ){
+            proc(i);
+            System.out.println();
+            proc2(i);
+        }
     }
 
     /**
@@ -21,45 +26,69 @@ public class Algo_5_3 {
      *
      * x 의 1의 개수를 구한다.
      * x 보다 작은 수 중 가장 큰 수.
-     * - x 의 2진수를 구한 후 우측에서부터 시작했을 때 10 이 처음 나오는 자리에 01을 넣는다.
-     * - 0이 없을 경우에는 성립할 수 없음.
-     * x 보다 큰 수 중 가장 작은 수.
-     * - x 의 2진수를 구한 후 우측에서부터 시작했을 때 01 이 처음 나오는 자리에 10을 넣는다.
-     * - 0이 없을 경우에는 젤 좌측에 1을 하나 추가한 후에 그 우측을 0으로 만든다.
+     * - x 의 2진수를 구한 후 우측에서부터 시작했을 때 10 이 처음 나오는 곳을 찾아서 1의 자리에 0을 넣고 그 우측을 모두 0으로 만든 후,
+     *   그 이전에 있던 1의 개수만큼을 0으로 바꾼 자리 우측에 붙여 넣어준다.
      */
     public void proc(int x){
         System.out.println(Integer.toBinaryString(x) + " - " + x);
-//        System.out.println(bit.getBit(x, 0));
-
-        // x 보다 작으면서 1의 개수가 같은 최대값.
-        int cnt = 1;
+        // 바꿔치기할 1의 자릿수.
+        int cnt = 0;
         int lessMax = x;
+        // 1의 개수.
+        int oneCount = 0;
         while( x > Math.pow(2, cnt) ){
-//            System.out.println(Integer.toBinaryString(x) + " = " + cnt);
-            if( bit.getBit(x, cnt) && !bit.getBit(x, cnt - 1) ){
-//                System.out.println(Integer.toBinaryString(x) + " - " + cnt);
-                lessMax = bit.cleanBit(lessMax, cnt);
-                lessMax = bit.setBit(lessMax, cnt - 1);
+            // 10 이 나오는 최초비트를 찾는다. 찾으면 1을 0으로 변경하고 oneCount ++
+            if( bit.getBit(x, cnt + 1) && !bit.getBit(x, cnt) ){
+                lessMax = BitUitl.cleanBit(lessMax, cnt + 1);
+                oneCount ++;
                 break;
+            } else {
+                // 10 이 아닐 경우 1의 개수 카운트.
+                if( bit.getBit(x, cnt) ){
+                    oneCount ++;
+                }
             }
+            // 자리수.
             cnt++;
         }
-        System.out.println(Integer.toBinaryString(lessMax) + " - " + lessMax);
+        // 자리수 이하 전체를 0으로 변경.
+        lessMax = bit.clearBitsIthrought0(lessMax, cnt);
+        // 1의 개수만큼 반복하면서 0으로 바꾼 자리수 우측부터 1을 채워 나간다.
+        while( oneCount > 0 ){
+            lessMax = BitUitl.setBit(lessMax, cnt);
+            cnt --;
+            oneCount --;
+        }
+        System.out.println(Integer.toBinaryString(lessMax) + " - " + lessMax + " = 작은 수 중에 큰 결과");
+    }
 
-        int overMin = x;
-        cnt = 0;
-        while( x > Math.pow(2, cnt) ){
-            if( !bit.getBit(x, cnt) && bit.getBit(x, cnt - 1) ){
-//                System.out.println(Integer.toBinaryString(x) + " - " + cnt);
-                overMin = bit.setBit(overMin, cnt);
-                overMin = bit.cleanBit(overMin, cnt - 1);
-                break;
-            }
-            cnt++;
-        }
+    /**
+     *  * - 0이 없을 경우에는 성립할 수 없음.
+     * x 보다 큰 수 중 가장 작은 수.
+     * - x 의 2진수를 구한 후 우측에서부터 시작했을 때 01 이 처음 나오는 자리에 0의 자리에 1을 넣고 그 우측에 있던 1의 개수만큼을 우측에서부터 채워 넣어준다.
+     * - 0이 없을 경우에는 젤 좌측에 1을 하나 추가한 후에 그 우측을 0으로 만든다.
+     */
+    public void proc2(int x){
         System.out.println(Integer.toBinaryString(x) + " - " + x);
-        System.out.println(Integer.toBinaryString(overMin) + " - " + overMin);
-
+        int cnt = 0;
+        int lessMin = x;
+        int oneCount = 0;
+        while( x > Math.pow(2, cnt) ){
+            if( !bit.getBit(x, cnt + 1) && bit.getBit(x, cnt) ){
+                lessMin = BitUitl.setBit(lessMin, cnt + 1);
+                break;
+            } else {
+                if( bit.getBit(x, cnt) ){
+                    oneCount ++;
+                }
+            }
+            cnt++;
+        }
+        lessMin = bit.clearBitsIthrought0(lessMin, cnt);
+        for( int i = 0; i < oneCount; i++ ){
+            lessMin = BitUitl.setBit(lessMin, i);
+        }
+        System.out.println(Integer.toBinaryString(lessMin) + " - " + lessMin + " = 큰 수 중에 작은 결과");
     }
 
 }

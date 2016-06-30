@@ -14,12 +14,15 @@ public class Algo_5_6 {
     }
 
     /**
+     * 1011
+     * 0100
+     * 1111
      * 정수의 비트를 홀수번째와 짝수번째를 바꾸는 방법.
      * @param num
      */
     private void proc(int num) {
         int len = BitUitl.getLengthBit(num);
-        System.out.println(Integer.toBinaryString(num));
+        System.out.println(" " + Integer.toBinaryString(num));
         for( int i = 0; i <= len; i+=2 ){
             num = change(num, i);
         }
@@ -41,15 +44,17 @@ public class Algo_5_6 {
     private int change(int num, int i){
         boolean prev = BitUitl.getBit(num, i);
         boolean after = BitUitl.getBit(num, i+1);
-        if( prev ){
-            num = BitUitl.setBit(num, i + 1);
-        }else{
-            num = BitUitl.cleanBit(num, i + 1);
-        }
-        if( after ){
-            num = BitUitl.setBit(num, i);
-        }else{
-            num = BitUitl.cleanBit(num, i);
+        if( prev != after ) {
+            if (prev) {
+                num = BitUitl.setBit(num, i + 1);
+            } else {
+                num = BitUitl.cleanBit(num, i + 1);
+            }
+            if (after) {
+                num = BitUitl.setBit(num, i);
+            } else {
+                num = BitUitl.cleanBit(num, i);
+            }
         }
         return num;
     }
